@@ -5,21 +5,22 @@ import java.util.Random;
 
 public class Pioche {
 
-    // VARIABLES/CONSTANTES DE CLASSE
+    // VARIABLES
     private Hashtable<Character,int[]> sac= new Hashtable<Character,int[]>();
     private int n_pieces = 0;
+
+    // CONSTANTES
+
 
     // CONSTRUCTEUR
     public Pioche(){
 
-        // INITIALISATION DU POT
-        this.goInitialisation();
+        this.initialisation();
     }
 
-    // FONCTION D'INITIALISATION
-    public void goInitialisation(){
+    // METHODES
+    public void initialisation(){
         
-        // INITIALISATION DU DICO
         this.sac.put('A', new int[] {1, 9});
         this.sac.put('B', new int[] {3, 2});
         this.sac.put('C', new int[] {3, 2});
@@ -48,33 +49,29 @@ public class Pioche {
         this.sac.put('Z', new int[] {10, 1});
         this.sac.put('[', new int[] {0, 2});
 
-        // INITIALISATION DU NOMBRES DE PIECES DANS LE POT
         this.n_pieces = 102;
     }
 
-    // METHODE DE PIOCHE-
-    public char goPiocher(){
+    public char piocher(){
 
+        // SI LE SAC EST PAS VIDE
         if (this.n_pieces > 0) {
 
-            // TIRAGE D'UNE PIECE [1:this.n]
+            // TIRAGE ALEATOIRE D'UNE PIECE
             Random r = new Random();
             int num_lettre = 1 + r.nextInt(this.n_pieces); 
 
             // INITIALISATION DES VARIABLES
-            int indice = 65;
-            char lettre = (char) indice;
-            int somme = sac.get(lettre)[1];
+            int indice = 65; char lettre = (char) indice; int somme = sac.get(lettre)[1];
 
-
-            // RECHERCHE DE LA LETTRE PIOCHEE
+            // RECHERCHE DE LA LETTRE
             while (somme < num_lettre) {
 
                 indice ++; lettre = (char) indice;
                 somme += sac.get(lettre)[1];
             }
 
-            // MISE A JOUR DES VALEURS
+            // MISE A JOUR DES VARIABLES DE CLASSE
             int[] auxiliaire = sac.get(lettre);
             sac.put(lettre, new int[] { auxiliaire [0], auxiliaire [1] - 1});
             this.n_pieces --;
@@ -85,6 +82,7 @@ public class Pioche {
         
         else {
 
+            // RIEN DANS LA PIOCHE
             return '#';
         }
     }
@@ -102,13 +100,14 @@ public class Pioche {
         return inventaire;
     }
 
+    // TEST
     public static void main(String[] args) {
 
         Pioche test = new Pioche();
 
         for (int i = 0; i<102; i++){
 
-            System.out.println(test.goPiocher());
+            System.out.println(test.piocher());
             System.out.println(test);
         }
     }

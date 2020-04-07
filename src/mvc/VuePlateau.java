@@ -15,7 +15,7 @@ public class VuePlateau extends GridPane {
         
         for (int i=0; i<15; i++) {
             for (int j=0; j<15; j++) {
-                Rectangle r = new Rectangle(50*i,50*j,50,50);
+                Rectangle r = new Rectangle(50,50);
 
                 if (p.get(i,j)==-4) {
                     r.setFill(Color.rgb(196,18,44));

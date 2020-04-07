@@ -1,20 +1,28 @@
 package annexe;
 
 public class Plateau {
-    // VARIABLES/CONSTANTES DE CLASSE
+
+    // VARIABLES
     private int[][] plateau = new int[15][15];
 
+    // CONSTANTES
     private int cote = 15;
 
     // CONSTRUCTEUR
     public Plateau(){
 
-        this.goInitialisation();
+        this.initialisation();
     }
 
-    public void goInitialisation(){
+    // METHODES
+    public void initialisation(){
 
-        // 1 = LETTRE POSSEE // 0 = VIDE // -1 = LT // -2 = LT // -3 = MD // -4 = MT 
+        // AU DESSUS OU EGAL DE 65 : CODE ASCII DE LA LETTRE SUR LA CASE
+        // 0 : VIDE
+        // -1 : LETTRE DOUBLE
+        // -2 : LETTRE TRIPLE
+        // -3 : MOT DOUBLE
+        // -4 : MOT TRIPLE
         int i = 0;
         this.plateau[i] = new int[] {-4,0,0,-1,0,0,0,-4,0,0,0,-1,0,0,-4}; this.plateau[this.cote - i - 1] = new int[] {-4,0,0,-1,0,0,0,-4,0,0,0,-1,0,0,-4}; i++;
         this.plateau[i] = new int[] {0,-3,0,0,0,-2,0,0,0,-2,0,0,0,-3,0}; this.plateau[this.cote - i - 1] = new int[] {0,-3,0,0,0,-2,0,0,0,-2,0,0,0,-3,0}; i++;
@@ -26,14 +34,21 @@ public class Plateau {
         this.plateau[i] = new int[] {-4,0,0,-1,0,0,0,0,0,0,0,-1,0,0,-4};
     }
 
-    public int place(int ligne, int colonne, char lettre){
+    public int placer(int ligne, int colonne, char lettre){
         
+        // SAUVEGARDE DU L'ETAT DE LA CASE
         int save = this.plateau[ligne][colonne];
+
+        // REMPLACEMENT DANS LE PLATEAU
         this.plateau[ligne][colonne] = (int) lettre;
+
+        // RENVOIE DE LA SAUVEGARDE
         return save;
     }
 
     public int get(int ligne, int colonne) {
+
+        // RENVOIE LA VALEUR D'UN CASE DU PLATEAU
         return this.plateau[ligne][colonne];
     }
     
@@ -63,10 +78,11 @@ public class Plateau {
         return text;
     }
 
+    // TEST
     public static void main(String[] args) {
 
         Plateau test = new Plateau();
-        System.out.println(test.place(7,7,'A'));
+        System.out.println(test.placer(7,7,'A'));
         System.out.println(test);
     }
 }
