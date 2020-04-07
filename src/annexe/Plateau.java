@@ -33,6 +33,10 @@ public class Plateau {
         return save;
     }
 
+    public int get(int ligne, int colonne) {
+        return this.plateau[ligne][colonne];
+    }
+    
     @Override
     public String toString(){
 

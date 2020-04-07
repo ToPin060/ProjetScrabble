@@ -8,13 +8,13 @@ public class Scrabble extends Application {
 
     private Modele modl = new Modele();
     private Controleur ctrl = new Controleur(modl);
-    private VueHello v1 = new VueHello(ctrl);
+    private VueScrabble v = new VueScrabble(ctrl);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Scrabble");
-        Scene sc1 = new Scene(v1);
-        primaryStage.setScene(sc1);
+        Scene sc = new Scene(v);
+        primaryStage.setScene(sc);
         primaryStage.show();
     }
 
