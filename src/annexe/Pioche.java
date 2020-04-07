@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Pioche {
 
-    // CREATION DE VARIABLES
+    // VARIABLES/CONSTANTES DE CLASSE
     private Hashtable<Character,int[]> sac= new Hashtable<Character,int[]>();
     private int n_pieces = 0;
 
