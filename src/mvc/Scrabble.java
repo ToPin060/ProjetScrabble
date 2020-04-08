@@ -8,7 +8,7 @@ public class Scrabble extends Application {
 
     private Modele modl = new Modele();
     private Controleur ctrl = new Controleur(modl);
-    private VueScrabble v = new VueScrabble(ctrl);
+    private VueScrabble v = new VueScrabble(modl,ctrl);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
