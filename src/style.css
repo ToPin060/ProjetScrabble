@@ -1,0 +1,20 @@
+#piece {
+    -fx-background-color: #fadba4;
+    -fx-background-radius: 5px;
+    -fx-border-width:3;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+}
+
+#rect {
+    -fx-fill: transparent;
+}
+
+#lettre {
+    -fx-font-size: 35px;
+    -fx-font-family: "Arial";
+}
+
+#score {
+    -fx-font-size: 15px;
+    -fx-font-family: "Arial";
+}

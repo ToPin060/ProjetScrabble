@@ -33,8 +33,8 @@ public class Controleur implements EventHandler {
         Piece p = (Piece) event.getSource();
 
         if (p.jouable) {
-            int x = (int) ((event.getSceneX()+25)/50)-1;
-            int y = (int) ((event.getSceneY()+25)/50)-1;
+            int x = (int) ((event.getSceneX()+50)/50)-1;
+            int y = (int) ((event.getSceneY()+50)/50)-1;
 
             if (x>14 || x<0 || y>14 || y<0) {
                 System.out.println("Erreur");

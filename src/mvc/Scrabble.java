@@ -14,6 +14,7 @@ public class Scrabble extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Scrabble");
         Scene sc = new Scene(v);
+        sc.getStylesheets().add("style.css");
         primaryStage.setScene(sc);
         primaryStage.show();
     }
