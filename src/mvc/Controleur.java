@@ -1,50 +1,43 @@
 package mvc;
 
-import annexe.Piece;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class Controleur implements EventHandler {
+public class Controleur {
 
-    private Modele modl;
+    Modele modl;
 
     public Controleur(Modele modl) {
         this.modl = modl;
     }
 
-    @Override
-    public void handle(Event event) {
-        Object o = event.getSource();
-        System.out.println("Hello");
-    }
-
     public void drag(MouseEvent event) {
-        Piece p = (Piece) event.getSource();
+        VuePiece p = (VuePiece) event.getSource();
 
         if (p.jouable) {
-            p.setTranslateX(event.getX() + p.getTranslateX()-25);
-            p.setTranslateY(event.getY() + p.getTranslateY()-25);
+            p.setTranslateX(event.getX() + p.getTranslateX() - 25);
+            p.setTranslateY(event.getY() + p.getTranslateY() - 25);
             event.consume();
         }
-	}
+    }
 
-    public void ajoutCase(MouseEvent event) {
-        Piece p = (Piece) event.getSource();
+    public void dragFin(MouseEvent event) {
+        VuePiece p = (VuePiece) event.getSource();
+        p.setTranslateX(0);
+        p.setTranslateY(0);
 
         if (p.jouable) {
-            int x = (int) ((event.getSceneX()+50)/50)-1;
-            int y = (int) ((event.getSceneY()+50)/50)-1;
+            int col = (int) ((event.getSceneX() + 50) / 50) - 1;
+            int lig = (int) ((event.getSceneY() + 50) / 50) - 1;
 
-            if (x>14 || x<0 || y>14 || y<0) {
-                System.out.println("Erreur");
+            if (col > 14 || col < 0 || lig > 14 || lig < 0) {
+                System.out.println("Déplacement impossible");
             }
 
             else {
-                p.setTranslateX(0);
-                p.setTranslateY(0);
-                this.modl.grilleJeu.add(p,x,y);
-                p.jouable = false;
+                p.col = col;
+                p.lig = lig;
+                this.modl.ajoutPiece(p);
+                // p.jouable = false;
             }
         }
     }

@@ -1,3 +1,9 @@
+#plateau {
+    -fx-vgap: 1; 
+    -fx-hgap: 1;
+    -fx-padding: 1;
+}
+
 #piece {
     -fx-background-color: #fadba4;
     -fx-background-radius: 5px;

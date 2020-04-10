@@ -7,13 +7,11 @@ public class VueScrabble extends BorderPane {
     Modele modl;
 
     public VueScrabble(Modele modl, Controleur ctrl) {
-        //VueHello v1 = new VueHello(ctrl);
-        //VuePlateau v2 = new VuePlateau(ctrl);
-        //this.setTop(v1);
-        //this.setCenter(v2);
         this.modl = modl;
-        this.setCenter(modl.grilleJeu);
+        VuePlateau plateau = new VuePlateau(modl, ctrl);
         VueMain mainJ1 = new VueMain(ctrl);
+        this.modl.addObserver(plateau);
+        this.setCenter(plateau);
         this.setBottom(mainJ1);
     }
 }
