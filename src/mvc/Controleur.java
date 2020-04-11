@@ -1,8 +1,10 @@
 package mvc;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class Controleur {
+public class Controleur implements EventHandler<ActionEvent> {
 
     Modele modl;
 
@@ -28,17 +30,21 @@ public class Controleur {
         if (p.jouable) {
             int col = (int) ((event.getSceneX() + 50) / 50) - 1;
             int lig = (int) ((event.getSceneY() + 50) / 50) - 1;
+            p.col = col;
+            p.lig = lig;
 
             if (col > 14 || col < 0 || lig > 14 || lig < 0) {
-                System.out.println("Déplacement impossible");
+                this.modl.retourDansMain(p);
             }
 
             else {
-                p.col = col;
-                p.lig = lig;
-                this.modl.ajoutPiece(p);
-                // p.jouable = false;
+                this.modl.ajouterPiece(p);
             }
         }
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
+        this.modl.remplirMain(this);
     }
 }

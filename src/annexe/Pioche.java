@@ -6,7 +6,7 @@ import java.util.Random;
 public class Pioche extends Hashtable<Character,int[]> {
 
     // VARIABLES
-    private int n_pieces = 0;
+    public int n_pieces = 0;
 
     // CONSTANTES
     // vide

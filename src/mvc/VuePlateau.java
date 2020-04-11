@@ -47,7 +47,7 @@ public class VuePlateau extends GridPane implements Observer {
         }
     }
 
-    public Boolean estPiece(int col, int lig) {
+    public Node recupPiece(int col, int lig) {
         Node node = null;
         ObservableList<Node> l = this.getChildren();
         int cpt = l.size() - 1;
@@ -56,29 +56,38 @@ public class VuePlateau extends GridPane implements Observer {
             node = l.get(cpt);
 
             if ((node instanceof VuePiece) && this.getRowIndex(node) == lig && this.getColumnIndex(node) == col) {
-                return true;
+                return node;
             }
             cpt--;
         }
 
-        return false;
+        return null;
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        VuePiece p = (VuePiece) arg;
+        // Gère le placement de la pièce en cours
+        if (arg instanceof VuePiece) {
+            VuePiece p = (VuePiece) arg;
 
-        if (this.getChildren().contains(p) && !(this.estPiece(p.col, p.lig))) {
-            this.setColumnIndex(p, p.col);
-            this.setRowIndex(p, p.lig);
-        }
+            if (!(p.col > 14 || p.col < 0 || p.lig > 14 || p.lig < 0)) {
+                // Si la pièce est déjà sur le plateau
+                if (this.getChildren().contains(p) && this.recupPiece(p.col, p.lig) == null) {
+                    this.setColumnIndex(p, p.col);
+                    this.setRowIndex(p, p.lig);
+                }
 
-        else if (!(this.estPiece(p.col, p.lig))) {
-            this.add(p, p.col, p.lig);
-        }
+                // Si la pièce est dans la main
+                else if (this.recupPiece(p.col, p.lig) == null) {
+                    this.add(p, p.col, p.lig);
+                    this.modl.motCourant.push(p);
+                }
 
-        else {
-            System.out.println("Déplacement impossible");
+                // Si le déplacement est invalide
+                else {
+                    System.out.println("Déplacement impossible");
+                }
+            }
         }
     }
 }
