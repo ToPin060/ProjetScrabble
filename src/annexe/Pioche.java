@@ -86,6 +86,11 @@ public class Pioche extends Hashtable<Character,int[]> {
         }
     }
 
+    public int getVal(char l){
+
+        return this.get(l)[0];
+    }
+
     @Override
     public String toString(){
 
