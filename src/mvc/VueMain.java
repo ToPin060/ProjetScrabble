@@ -2,44 +2,43 @@ package mvc;
 
 import java.util.Observable;
 import java.util.Observer;
-import annexe.Pioche;
-import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
-public class VueMain extends HBox implements Observer {
+public class VueMain implements Observer {
 
-    Pioche pioche;
+    private Modele modl;
+    private Controleur ctrl;
+    private HBox main;
 
-    public VueMain(Controleur ctrl) {
-        this.pioche = new Pioche();
+    public VueMain(Modele modl, Controleur ctrl) {
+        this.modl = modl;
+        this.ctrl = ctrl;
+        this.main = ctrl.main;
 
-        for (int i = 0; i < 7; i++) {
-            this.creerPiece(ctrl);
+        for (int i = 0; i < 5; i++) {
+            this.creerPiece();
         }
-
-        this.setAlignment(Pos.BASELINE_CENTER);
-        this.setSpacing(10);
     }
 
-    public void creerPiece(Controleur ctrl) {
-        char c = pioche.piocher();
-        Text l = new Text("" + c);
-        Text s = new Text("" + pioche.get(c)[0]);
+    public void creerPiece() {
+        char c = this.modl.pioche.piocher();
+        Text l = new Text("");
+        if (c != '[') {
+            l.setText("" + c);
+        }
+        Text s = new Text("" + this.modl.pioche.get(c)[0]);
         VuePiece p = new VuePiece(l, s);
-        this.getChildren().add(p);
-        p.setOnMouseDragged(event -> ctrl.drag(event));
-        p.setOnMouseReleased(event -> ctrl.dragFin(event));
+        this.main.getChildren().add(p);
+        p.setOnMouseDragged(event -> this.ctrl.drag(event));
+        p.setOnMouseReleased(event -> this.ctrl.dragFin(event));
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        // Rempli la main à la fin du tour
-        if (arg instanceof Controleur) {
-            Controleur ctrl = (Controleur) arg;
-
-            while (this.getChildren().size() < 7 && pioche.n_pieces > 0) {
-                this.creerPiece(ctrl);
+        if (arg == null) {
+            while (this.main.getChildren().size() < 7 && this.modl.pioche.n_pieces > 0) {
+                this.creerPiece();
             }
         }
     }

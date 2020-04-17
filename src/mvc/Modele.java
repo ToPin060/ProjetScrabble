@@ -1,33 +1,31 @@
 package mvc;
 
+import annexe.*;
 import java.util.Observable;
 import java.util.Stack;
-import annexe.Plateau;
 
 public class Modele extends Observable {
 
-    public Plateau plateau = new Plateau();
-    public Stack<VuePiece> motCourant = new Stack();
+    public Plateau plateau;
+    public Pioche pioche;
+    public Stack<VuePiece> motCourant;
 
     public Modele() {
+        this.plateau = new Plateau();
+        this.pioche = new Pioche();
+        this.motCourant = new Stack();
     }
 
-    public void ajouterPiece(VuePiece p) {
+    public void deplacerPiece(VuePiece p) {
         // Observer: VuePlateau
         this.setChanged();
         this.notifyObservers(p);
     }
 
-    public void retourDansMain(VuePiece p) {
-        // Observer: VueScrabble
-        this.setChanged();
-        this.notifyObservers(p);
-    }
-
-    public void remplirMain(Controleur ctrl) {
+    public void remplirMain() {
         // Observer: VueMain
         this.setChanged();
-        this.notifyObservers(ctrl);
+        this.notifyObservers();
 
         while (!motCourant.empty()) {
             motCourant.peek().jouable = false;

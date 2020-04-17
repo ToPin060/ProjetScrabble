@@ -1,18 +1,9 @@
-#plateau {
-    -fx-vgap: 1; 
-    -fx-hgap: 1;
-    -fx-padding: 1;
-}
-
 #piece {
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
     -fx-background-color: #fadba4;
     -fx-background-radius: 5px;
-    -fx-border-width:3;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
-}
-
-#rect {
-    -fx-fill: transparent;
 }
 
 #lettre {
@@ -23,4 +14,9 @@
 #score {
     -fx-font-size: 15px;
     -fx-font-family: "Arial";
+}
+
+#main {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
 }
