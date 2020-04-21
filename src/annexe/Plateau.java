@@ -1,5 +1,7 @@
 package annexe;
 
+import java.io.IOException;
+
 public class Plateau {
 
     // VARIABLES
@@ -7,15 +9,16 @@ public class Plateau {
 
     // CONSTANTES
     private int cote = 15;
+    Dictionnaire dico;
 
     // CONSTRUCTEUR
     public Plateau(){
 
-        this.initialisation();
+        this.initialisation(new Dictionnaire());
     }
 
     // METHODES
-    public void initialisation(){
+    public void initialisation(Dictionnaire d){
 
         // AU DESSUS OU EGAL DE 65 : CODE ASCII DE LA LETTRE SUR LA CASE
         // 0 : VIDE
@@ -32,6 +35,8 @@ public class Plateau {
         this.plateau[i] = new int[] {0,-2,0,0,0,-2,0,0,0,-2,0,0,0,-2,0}; this.plateau[this.cote - i - 1] = new int[] {0,-2,0,0,0,-2,0,0,0,-2,0,0,0,-2,0}; i++;
         this.plateau[i] = new int[] {0,0,-1,0,0,0,-1,0,-1,0,0,0,-1,0,0}; this.plateau[this.cote - i - 1] = new int[] {0,0,-1,0,0,0,-1,0,-1,0,0,0,-1,0,0}; i++;
         this.plateau[i] = new int[] {-4,0,0,-1,0,0,0,-3,0,0,0,-1,0,0,-4};
+
+        this.dico = d;    
     }
 
     public int placer(int ligne, int colonne, char lettre){
@@ -78,11 +83,71 @@ public class Plateau {
         return text;
     }
 
-    // TEST
-    public static void main(String[] args) {
+    public boolean verif(int[][] cases) {
 
-        Plateau test = new Plateau();
-        System.out.println(test.placer(7,7,'A'));
-        System.out.println(test);
+        int dir; int i; boolean ok = true;
+
+        if (cases.length == 1) { ok = getMot(cases[0], 0, "", true) && getMot(cases[0], 1, "", true); }
+        else {
+            if (cases[0][0]-cases[1][0] == 0) { dir = 0; }
+            else { dir = 1; }
+
+            ok &= getMot(cases[0], dir, "", true);
+            
+            if (dir == 0) { dir = 1;}
+            else { dir = 0;}
+
+            for (i = 0; i < cases.length; i++) {
+                
+                ok &= getMot(cases[i], dir, "", false);
+            }
+        }
+        
+        return ok;
     }
+
+    public boolean getMot(int[] coord, int dir,String mot, boolean pre) {
+
+        while (pre) {
+
+            //System.out.println("En cours de placement...");
+
+            if(dir == 0) {
+                if (coord[1] == 0) { pre = false; }
+                else {
+                    if (this.get(coord[0],coord[1]-1) <= 0) { pre = false; }
+                    else { coord[1]--; }
+                }
+            }
+            else{
+                if (coord[0] == 0) { pre = false; }
+                else {
+                    if (this.get(coord[0]-1,coord[1]) <= 0) { pre = false; }
+                    else { coord[0]--; }
+                }
+            }
+        }
+
+        //System.out.println("\n" + "Je suis placé en : " + coord[0] + ", " + coord[1] + "\n");
+
+        if ( coord[0] < 15 && coord[1] < 15 && this.get(coord[0],coord[1]) > 0) {
+            
+            int x = coord[0]; int y = coord[1];
+
+            mot += this.get(x,y);
+
+            if (dir == 0) {coord[1]++;}
+            else {coord[0]++;}
+
+            return getMot(coord, dir, mot, false);
+        }
+
+        else {
+            
+            return this.dico.containsValue(mot);
+        }
+    }
+
+    // TEST
+
 }

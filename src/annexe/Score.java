@@ -73,7 +73,7 @@ public class Score {
 
         //System.out.println("\n" + "Je suis placé en : " + coord[0] + ", " + coord[1] + "\n");
 
-        if ( coord[0] < 6 && coord[1] < 6 && this.pl.get(coord[0],coord[1]) > 0) {
+        if ( coord[0] < 15 && coord[1] < 15 && this.pl.get(coord[0],coord[1]) > 0) {
             
             int coef = 1; int i;
 

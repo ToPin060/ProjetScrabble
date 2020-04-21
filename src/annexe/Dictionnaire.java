@@ -15,26 +15,36 @@ public class Dictionnaire extends Hashtable<Integer,String> {
     // vide
 
     // CONSTRUCTEUR
-    public Dictionnaire() throws IOException {
+    public Dictionnaire(){
 
         this.initialisation();
     }
 
     // METHODES
-    public void initialisation() throws IOException{
+    public String initialisation() {
+
+        
 
         // OUVERTURE DU DICTIONNAIRE
-        BufferedReader in = new BufferedReader(new FileReader("dictionnaire.txt"));
-        String line;
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("dictionnaire.txt"));
+           
+            String line;
 
-        // AJOUT DE CHAQUE MOT DANS LA HASTABLE
-        while ((line = in.readLine()) != null) {
+            // AJOUT DE CHAQUE MOT DANS LA HASTABLE
+            while ((line = in.readLine()) != null) {
+    
+                   this.put(line.hashCode(),line);
+                }
+                
+            // FERMETURE DU FICHIER
+            in.close();
 
-   			this.put(line.hashCode(),line);
-            }
-            
-        // FERMETURE DU FICHIER
-		in.close();
+            return "ok";
+        }
+        catch (IOException e){
+            return "Exception !";
+        }
     }
 
     // TEST
