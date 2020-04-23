@@ -87,26 +87,30 @@ public class Plateau {
 
         int dir; int i; boolean ok = true;
 
-        if (cases.length == 1) { ok = getMot(cases[0], 0, "", true) && getMot(cases[0], 1, "", true); }
+        if (cases.length == 1) {ok = getMot(cases[0], 0, "", true)[0] && getMot(cases[0], 1, "", true)[0];}
         else {
             if (cases[0][0]-cases[1][0] == 0) { dir = 0; }
             else { dir = 1; }
 
-            ok &= getMot(cases[0], dir, "", true);
+            ok &= getMot(cases[0], dir, "", true)[0];
             
             if (dir == 0) { dir = 1;}
             else { dir = 0;}
 
             for (i = 0; i < cases.length; i++) {
                 
-                ok &= getMot(cases[i], dir, "", false);
+                boolean save[] = getMot(cases[i], dir, "", false);
+                if (!save[1]) {
+                    
+                    ok &= save[0];
+                }
             }
         }
         
         return ok;
     }
 
-    public boolean getMot(int[] coord, int dir,String mot, boolean pre) {
+    public boolean[] getMot(int[] coord, int dir,String mot, boolean pre) {
 
         while (pre) {
 
@@ -134,7 +138,7 @@ public class Plateau {
             
             int x = coord[0]; int y = coord[1];
 
-            mot += this.get(x,y);
+            mot += (char) this.get(x,y);
 
             if (dir == 0) {coord[1]++;}
             else {coord[0]++;}
@@ -144,7 +148,7 @@ public class Plateau {
 
         else {
             
-            return this.dico.containsValue(mot);
+            return new boolean[] {this.dico.containsValue(mot),mot.length() <= 1};
         }
     }
 

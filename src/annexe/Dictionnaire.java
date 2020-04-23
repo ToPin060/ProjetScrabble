@@ -23,7 +23,6 @@ public class Dictionnaire extends Hashtable<Integer,String> {
     // METHODES
     public String initialisation() {
 
-        
 
         // OUVERTURE DU DICTIONNAIRE
         try {
@@ -51,6 +50,6 @@ public class Dictionnaire extends Hashtable<Integer,String> {
     public static void main(String[] args) throws IOException{
 
         Dictionnaire test = new Dictionnaire();
-        System.out.println(test.containsValue("yoloaque"));
+        System.out.println(test.containsValue("sel"));
     }
 }
