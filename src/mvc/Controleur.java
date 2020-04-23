@@ -5,7 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mvc.Modele.Joueur;
 
 public class Controleur {
 
@@ -18,8 +20,9 @@ public class Controleur {
     }
 
     @FXML
-    public GridPane grille;
-    public HBox main;
+    public GridPane grillePanel;
+    public HBox mainPanel;
+    public Text joueurTexte;
 
     @FXML
     private void initialize() {
@@ -27,16 +30,24 @@ public class Controleur {
         VueMain main = new VueMain(modl, this);
         this.modl.addObserver(plat);
         this.modl.addObserver(main);
+        this.joueurTexte.setText("Joueur 1");
     }
 
     @FXML
     private void fin() {
-        this.modl.remplirMain();
+        this.modl.tourSuivant();
+        if (this.modl.joueur == Joueur.J1) {
+            this.joueurTexte.setText("Joueur 1");
+        }
+
+        else {
+            this.joueurTexte.setText("Joueur 2");
+        }
     }
 
     @FXML
     private void abandonner() {
-        Stage stage = (Stage) this.grille.getScene().getWindow();
+        Stage stage = (Stage) this.grillePanel.getScene().getWindow();
         stage.setScene(this.menu);
     }
 

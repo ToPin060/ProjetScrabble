@@ -34,7 +34,7 @@ public class Scrabble extends Application {
         scrabbleLoader.setController(new Controleur(menu, modl));
         Parent scrabbleRoot = (Parent) scrabbleLoader.load();
         scrabble = new Scene(scrabbleRoot);
-        
+
         primaryStage.setScene(menu);
         primaryStage.setResizable(false);
         primaryStage.show();

@@ -16,13 +16,13 @@ public class VuePlateau implements Observer {
     private Modele modl;
     private Controleur ctrl;
     private GridPane grillePanel;
-    private HBox main;
+    private HBox mainPanel;
 
     public VuePlateau(Modele modl, Controleur ctrl) {
         this.modl = modl;
         this.ctrl = ctrl;
-        this.grillePanel = ctrl.grille;
-        this.main = ctrl.main;
+        this.grillePanel = ctrl.grillePanel;
+        this.mainPanel = ctrl.mainPanel;
     }
 
     public Node recupPiece(int col, int lig) {
@@ -80,14 +80,14 @@ public class VuePlateau implements Observer {
                         else {
                             p.lettre.setText(ltr.get().toUpperCase());
                             this.grillePanel.add(p, p.col, p.lig);
-                            this.modl.motCourant.push(p);
+                            this.modl.motCourant.add(p);
                         }
                     }
 
                     // Si la pièce n'est pas un joker
                     else {
                         this.grillePanel.add(p, p.col, p.lig);
-                        this.modl.motCourant.push(p);
+                        this.modl.motCourant.add(p);
                     }
                 }
             }
@@ -100,7 +100,7 @@ public class VuePlateau implements Observer {
                     p.lettre.setText("");
                 }
 
-                this.main.getChildren().add(p);
+                this.mainPanel.getChildren().add(p);
                 this.modl.motCourant.remove(p);
             }
         }
