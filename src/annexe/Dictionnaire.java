@@ -50,6 +50,6 @@ public class Dictionnaire extends Hashtable<Integer,String> {
     public static void main(String[] args) throws IOException{
 
         Dictionnaire test = new Dictionnaire();
-        System.out.println(test.containsValue("sel"));
+        System.out.println(test.containsValue("vait"));
     }
 }

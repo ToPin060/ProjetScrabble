@@ -169,7 +169,7 @@ public class Modele extends Observable {
             return false;
         }
 
-        if (!this.plateau.verifierPlateau()) {
+        if (!this.plateau.verif(this.motCourant)) {
             System.out.println("ortho");
             this.restaurerPlateau(save);
             return false;

@@ -2,6 +2,8 @@ package annexe;
 
 import java.util.ArrayList;
 
+import mvc.VuePiece;
+
 public class Plateau {
 
     // VARIABLES
@@ -83,23 +85,40 @@ public class Plateau {
         return text;
     }
 
-    public boolean verif(int[][] cases) {
+    /*
+    public boolean verif(ArrayList<VuePiece> motCourant) {
 
         int dir; int i; boolean ok = true;
 
-        if (cases.length == 1) {ok = getMot(cases[0], 0, "", true)[0] && getMot(cases[0], 1, "", true)[0];}
+        if (motCourant.length == 1) {
+            boolean haut,bas,gauche,droite;
+
+            haut = this.get(motCourant[0][0] - 1, motCourant[0][1]) > 0;
+            gauche = this.get(motCourant[0][0], motCourant[0][1] - 1) > 0;
+            bas = this.get(motCourant[0][0] + 1, motCourant[0][1]) > 0;
+            droite = this.get(motCourant[0][0], motCourant[0][1] + 1) > 0;
+
+            if ( (haut || bas) && (gauche || droite) ){
+                
+                return getMot(motCourant[0], 0, "", false)[0] & getMot(motCourant[0], 1, "", false)[0];
+            }
+            else {
+                if (haut || bas) { return  getMot(motCourant[0], 1, "", false)[0]; }
+                else { return  getMot(motCourant[0], 1, "", false)[0]; }
+            }
+        }
         else {
-            if (cases[0][0]-cases[1][0] == 0) { dir = 0; }
+            if (motCourant[0][0]-motCourant[1][0] == 0) { dir = 0; }
             else { dir = 1; }
 
-            ok &= getMot(cases[0], dir, "", true)[0];
+            ok &= getMot(motCourant[0], dir, "", true)[0];
             
             if (dir == 0) { dir = 1;}
             else { dir = 0;}
 
-            for (i = 0; i < cases.length; i++) {
+            for (i = 0; i < motCourant.length; i++) {
                 
-                boolean save[] = getMot(cases[i], dir, "", false);
+                boolean save[] = getMot(motCourant[i], dir, "", false);
                 if (!save[1]) {
                     
                     ok &= save[0];
@@ -109,7 +128,7 @@ public class Plateau {
         
         return ok;
     }
-
+*/
     public boolean[] getMot(int[] coord, int dir,String mot, boolean pre) {
 
         while (pre) {
@@ -147,9 +166,61 @@ public class Plateau {
         }
 
         else {
-            
+            if (mot.length() > 1){
+                System.out.println(mot);
+            }
             return new boolean[] {this.dico.containsValue(mot),mot.length() <= 1};
         }
+    }
+
+    public boolean verif(ArrayList<VuePiece> cases) {
+
+        int dir; int i; boolean ok = true;
+
+        if (cases.size() == 1) {
+            boolean haut,bas,gauche,droite;
+
+            haut = this.get(cases.get(0).lig - 1, cases.get(0).col) > 0;
+            gauche = this.get(cases.get(0).lig, cases.get(0).col - 1) > 0;
+            bas = this.get(cases.get(0).lig + 1, cases.get(0).col) > 0;
+            droite = this.get(cases.get(0).lig, cases.get(0).col + 1) > 0;
+
+            if ( (haut || bas) && (gauche || droite) ){
+                
+                System.out.println("2cotes");
+                return getMot(new int[] {cases.get(0).lig,cases.get(0).col}, 0, "", true)[0] & getMot(new int[] {cases.get(0).lig,cases.get(0).col}, 1, "", true)[0];
+            }
+            else {
+                if (haut || bas) {
+                    System.out.println("vertical");
+                    return  getMot(new int[] {cases.get(0).lig,cases.get(0).col}, 1, "", true)[0];
+                }
+                if (gauche || droite) {
+                    System.out.println("horizontal");
+                    return  getMot(new int[] {cases.get(0).lig,cases.get(0).col}, 0, "", true)[0];
+                }
+            }
+        }
+        else {
+            if (cases.get(0).lig - cases.get(1).lig == 0) { dir = 0; }
+            else { dir = 1; }
+
+            ok &= getMot(new int[] {cases.get(0).lig,cases.get(0).col}, dir, "", true)[0];
+            
+            if (dir == 0) { dir = 1;}
+            else { dir = 0;}
+
+            for (i = 0; i < cases.size(); i++) {
+                
+                boolean save[] = getMot(new int[] {cases.get(i).lig,cases.get(i).col}, dir, "", false);
+                if (!save[1]) {
+                    
+                    ok &= save[0];
+                }
+            }
+        }
+        
+        return ok;
     }
 
     public boolean verifierPlateau() {
