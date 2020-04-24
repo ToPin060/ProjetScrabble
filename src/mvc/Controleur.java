@@ -2,6 +2,8 @@ package mvc;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -35,13 +37,25 @@ public class Controleur {
 
     @FXML
     private void fin() {
-        this.modl.tourSuivant();
-        if (this.modl.joueur == Joueur.J1) {
-            this.joueurTexte.setText("Joueur 1");
+        System.out.println("---------");
+        if (this.modl.verificationTour()) {
+            this.modl.tourSuivant();
+
+            if (this.modl.joueur == Joueur.J1) {
+                this.joueurTexte.setText("Joueur 1");
+            }
+    
+            else {
+                this.joueurTexte.setText("Joueur 2");
+            }
         }
 
         else {
-            this.joueurTexte.setText("Joueur 2");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Fin de tour impossible");
+            alert.setContentText("Le mot est incorrect ou mal placé.");
+            alert.showAndWait();
         }
     }
 

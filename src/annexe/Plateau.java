@@ -1,11 +1,11 @@
 package annexe;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class Plateau {
 
     // VARIABLES
-    private int[][] plateau = new int[15][15];
+    public int[][] plateau = new int[15][15];
 
     // CONSTANTES
     private int cote = 15;
@@ -39,13 +39,13 @@ public class Plateau {
         this.dico = d;    
     }
 
-    public int placer(int ligne, int colonne, char lettre){
+    public int placer(int ligne, int colonne, int lettre){
         
         // SAUVEGARDE DU L'ETAT DE LA CASE
         int save = this.plateau[ligne][colonne];
 
         // REMPLACEMENT DANS LE PLATEAU
-        this.plateau[ligne][colonne] = (int) lettre;
+        this.plateau[ligne][colonne] = lettre;
 
         // RENVOIE DE LA SAUVEGARDE
         return save;
@@ -150,6 +150,76 @@ public class Plateau {
             
             return new boolean[] {this.dico.containsValue(mot),mot.length() <= 1};
         }
+    }
+
+    public boolean verifierPlateau() {
+        ArrayList<String> horz = new ArrayList<String>();
+        ArrayList<String> vert = new ArrayList<String>();
+
+        for (int i = 0; i < this.plateau.length; i++) {
+            String s1 = "";
+            String s2 = "";
+
+            for (int j = 0; j < this.plateau.length; j++) {
+                //horizontaux
+                if (this.plateau[i][j] <= 0 && s1.length()>1) {
+                    horz.add(s1);
+                    s1 = "";
+                }
+
+                else if (this.plateau[i][j] >= 97 && this.plateau[i][j] <= 122) {
+                    String str1 = new Character((char) this.plateau[i][j]).toString();
+                    s1 += str1;
+                }
+
+                else {
+                    s1 = "";
+                }
+
+                //verticaux
+                if (this.plateau[j][i] <= 0 && s2.length()>1) {
+                    vert.add(s2);
+                    s2 = "";
+                }
+
+                else if (this.plateau[j][i] >= 97 && this.plateau[j][i] <= 122) {
+                    String str2 = new Character((char) this.plateau[j][i]).toString();
+                    s2 += str2;
+                }
+
+                else {
+                    s2 = "";
+                }
+            }
+
+            if (s1.length()>1) {
+                horz.add(s1);
+            }
+
+            if (s2.length()>1) {
+                vert.add(s2);
+            }
+
+            s1 = "";
+            s2 = "";
+        }
+
+        System.out.println(horz);
+        System.out.println(vert);
+
+        for (int i = 0; i < horz.size(); i++) {
+            if (!(this.dico.contains(horz.get(i)))) {
+                return false;
+            }
+        }
+
+        for (int i = 0; i < vert.size(); i++) {
+            if (!(this.dico.contains(vert.get(i)))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // TEST
