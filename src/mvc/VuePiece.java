@@ -27,4 +27,10 @@ public class VuePiece extends StackPane {
             this.setAlignment(score, Pos.BOTTOM_RIGHT);
         }
     }
+
+    @Override
+    public String toString(){
+
+        return "["+this.lig+", "+this.col+"]";
+    }
 }

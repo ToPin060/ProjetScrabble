@@ -9,7 +9,9 @@ public class Modele extends Observable {
 
     public Plateau plateau;
     public Pioche pioche;
+    public Score score;
     public ArrayList<VuePiece> motCourant, mainJ1, mainJ2;
+    int[][] lettresP;
 
     public enum Joueur {
         J1, J2
@@ -21,6 +23,7 @@ public class Modele extends Observable {
     public Modele() {
         this.plateau = new Plateau();
         this.pioche = new Pioche();
+        this.score = new Score(this.plateau,this.pioche);
         this.motCourant = new ArrayList<VuePiece>();
         this.mainJ1 = new ArrayList<VuePiece>();
         this.mainJ2 = new ArrayList<VuePiece>();
@@ -175,6 +178,7 @@ public class Modele extends Observable {
             return false;
         }
 
+        this.lettresP = save;
         return true;
     }
 

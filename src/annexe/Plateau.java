@@ -38,6 +38,8 @@ public class Plateau {
         this.plateau[i] = new int[] {0,0,-1,0,0,0,-1,0,-1,0,0,0,-1,0,0}; this.plateau[this.cote - i - 1] = new int[] {0,0,-1,0,0,0,-1,0,-1,0,0,0,-1,0,0}; i++;
         this.plateau[i] = new int[] {-4,0,0,-1,0,0,0,-3,0,0,0,-1,0,0,-4};
 
+        System.out.println(this);
+
         this.dico = d;    
     }
 

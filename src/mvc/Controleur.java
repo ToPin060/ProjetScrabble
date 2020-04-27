@@ -39,6 +39,16 @@ public class Controleur {
     private void fin() {
         System.out.println("---------");
         if (this.modl.verificationTour()) {
+            
+            switch (this.modl.joueur) {
+                case J1:
+                    this.modl.score.scoreInser(this.modl.lettresP, 1);
+                    break;
+                case J2:
+                    this.modl.score.scoreInser(this.modl.lettresP, 2);
+                    break;
+            }
+            System.out.println(this.modl.score.j1+", "+this.modl.score.j2) ;          
             this.modl.tourSuivant();
 
             if (this.modl.joueur == Joueur.J1) {
