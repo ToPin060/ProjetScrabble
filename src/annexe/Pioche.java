@@ -91,6 +91,11 @@ public class Pioche extends Hashtable<Character,int[]> {
         return this.get(l)[0];
     }
 
+    public void ajouter(char lettre) {
+        this.get(lettre)[1]++;
+        this.n_pieces++;
+    }
+
     @Override
     public String toString(){
 

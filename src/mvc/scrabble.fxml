@@ -6,9 +6,25 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="850.0" stylesheets="/mvc/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="900.0" prefWidth="786.0" stylesheets="/mvc/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox styleClass="barre-titre" onMouseDragged="#dragFenetre" onMousePressed="#getCoord" alignment="BOTTOM_RIGHT" prefHeight="36.0" BorderPane.alignment="BOTTOM_CENTER">
+         <children>
+            <AnchorPane>
+               <children>
+                  <Button id="minimiser" prefHeight="36.0" prefWidth="45.0" onAction="#minimiser" text="&#59192;" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="880.0">
+               <children>
+                  <Button id="fermer" prefHeight="36.0" prefWidth="55.0" onAction="#fermer" text="&#59540;" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </top>
    <center>
-      <GridPane fx:id="grillePanel" hgap="1.0" vgap="1.0" BorderPane.alignment="CENTER">
+      <GridPane fx:id="grillePanel" alignment="BOTTOM_CENTER" hgap="1.0" vgap="1.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle fill="#c4122c" height="50.0" width="50.0" />
             <Rectangle fill="#249090" height="50.0" width="50.0" GridPane.columnIndex="1" />
@@ -238,21 +254,16 @@
          </children>
       </GridPane>
    </center>
-   <right>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
-   </right>
-   <left>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
-   </left>
    <bottom>
-      <Pane prefHeight="100.0" BorderPane.alignment="CENTER">
+      <Pane styleClass="ctrl-joueur" prefHeight="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="TOP_LEFT" layoutX="47.0" layoutY="13.0" mnemonicParsing="false" onAction="#echanger" text="Échanger" />
-            <Button alignment="BOTTOM_LEFT" layoutX="759.0" layoutY="61.0" mnemonicParsing="false" onAction="#fin" text="Fin du tour" />
-            <HBox id="main" fx:id="mainPanel" alignment="BASELINE_CENTER" layoutX="227.0" layoutY="25.0" prefHeight="50.0" />
-            <Button alignment="TOP_RIGHT" layoutX="771.0" layoutY="13.0" mnemonicParsing="false" onAction="#passer" text="Passer" />
-            <Button alignment="BOTTOM_RIGHT" layoutX="39.0" layoutY="61.0" mnemonicParsing="false" onAction="#abandonner" text="Abandonner" />
-            <Text id="joueur" fx:id="joueurTexte" layoutX="670.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Button fx:id="echangerBtn" layoutX="30.0" layoutY="13.0" onAction="#echanger" text="Échanger" />
+            <Button layoutX="666.0" layoutY="50.0" onAction="#fin" text="Fin du tour" />
+            <HBox id="main" fx:id="mainPanel" layoutX="140.0" layoutY="20.0" prefHeight="50.0" />
+            <Button layoutX="666.0" layoutY="13.0" onAction="#passer" text="Passer" />
+            <Button layoutX="30.0" layoutY="50.0" onAction="#abandonner" text="Abandonner" />
+            <Text id="txt" fx:id="joueurTexte" layoutX="580.0" layoutY="30.0" />
+            <Text id="txt" fx:id="scoreTexte" layoutX="580.0" layoutY="70.0" />
          </children>
       </Pane>
    </bottom>

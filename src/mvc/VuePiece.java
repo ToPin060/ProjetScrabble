@@ -29,8 +29,8 @@ public class VuePiece extends StackPane {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
 
-        return "["+this.lig+", "+this.col+"]";
+        return "[" + this.lig + ", " + this.col + "]";
     }
 }

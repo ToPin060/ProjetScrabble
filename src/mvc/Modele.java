@@ -23,7 +23,7 @@ public class Modele extends Observable {
     public Modele() {
         this.plateau = new Plateau();
         this.pioche = new Pioche();
-        this.score = new Score(this.plateau,this.pioche);
+        this.score = new Score(this.plateau, this.pioche);
         this.motCourant = new ArrayList<VuePiece>();
         this.mainJ1 = new ArrayList<VuePiece>();
         this.mainJ2 = new ArrayList<VuePiece>();
@@ -110,22 +110,17 @@ public class Modele extends Observable {
                     return false;
                 }
 
-                try {
-                    if (this.plateau.get(lig, col - 1) > 0 || this.plateau.get(lig, col + 1) > 0) {
-                        voisin = true;
-                    }
+                if ((col > 0 && this.plateau.get(lig, col - 1) > 0)
+                        || (col < 14 && this.plateau.get(lig, col + 1) > 0)) {
+                    voisin = true;
+                }
 
-                    if (lig == coordLig[0] && this.plateau.get(lig - 1, col) > 0) {
-                        voisin = true;
-                    }
+                if (lig == coordLig[0] && lig > 0 && this.plateau.get(lig - 1, col) > 0) {
+                    voisin = true;
+                }
 
-                    if (lig == coordLig[this.motCourant.size() - 1] && this.plateau.get(lig + 1, col) > 0) {
-                        voisin = true;
-                    }
-
-                } catch (Exception e) {
-                    lig++;
-                    continue;
+                if (lig == coordLig[this.motCourant.size() - 1] && lig < 14 && this.plateau.get(lig + 1, col) > 0) {
+                    voisin = true;
                 }
 
                 lig++;
@@ -144,22 +139,17 @@ public class Modele extends Observable {
                     return false;
                 }
 
-                try {
-                    if (this.plateau.get(lig - 1, col) > 0 || this.plateau.get(lig + 1, col) > 0) {
-                        voisin = true;
-                    }
+                if ((lig > 0 && this.plateau.get(lig - 1, col) > 0)
+                        || (lig < 14 && this.plateau.get(lig + 1, col) > 0)) {
+                    voisin = true;
+                }
 
-                    if (col == coordCol[0] && this.plateau.get(lig, col - 1) > 0) {
-                        voisin = true;
-                    }
+                if (col == coordCol[0] && col > 0 && this.plateau.get(lig, col - 1) > 0) {
+                    voisin = true;
+                }
 
-                    if (col == coordCol[this.motCourant.size() - 1] && this.plateau.get(lig, col + 1) > 0) {
-                        voisin = true;
-                    }
-
-                } catch (Exception e) {
-                    col++;
-                    continue;
+                if (col == coordCol[this.motCourant.size() - 1] && col < 14 && this.plateau.get(lig, col + 1) > 0) {
+                    voisin = true;
                 }
 
                 col++;
@@ -171,6 +161,8 @@ public class Modele extends Observable {
             this.restaurerPlateau(save);
             return false;
         }
+
+        System.out.println(this.plateau.verif(this.motCourant) == this.plateau.verifierPlateau());
 
         if (!this.plateau.verif(this.motCourant)) {
             System.out.println("ortho");
@@ -186,5 +178,16 @@ public class Modele extends Observable {
         for (int i = 0; i < save.length; i++) {
             this.plateau.placer(save[i][0], save[i][1], save[i][2]);
         }
+    }
+
+    public void reset() {
+        this.plateau = new Plateau();
+        this.pioche = new Pioche();
+        this.score = new Score(this.plateau, this.pioche);
+        this.motCourant = new ArrayList<VuePiece>();
+        this.mainJ1 = new ArrayList<VuePiece>();
+        this.mainJ2 = new ArrayList<VuePiece>();
+        this.joueur = Joueur.J1;
+        this.tour = 0;
     }
 }

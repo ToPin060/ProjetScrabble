@@ -93,4 +93,16 @@ public class VueMain implements Observer {
             }
         }
     }
+
+    public void reset() {
+        this.mainPanel.getChildren().clear();
+
+        for (int i = 0; i < 7; i++) {
+            VuePiece p1 = this.creerPiece();
+            VuePiece p2 = this.creerPiece();
+            this.modl.mainJ1.add(p1);
+            this.modl.mainJ2.add(p2);
+            this.mainPanel.getChildren().add(p1);
+        }
+    }
 }

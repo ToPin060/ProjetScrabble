@@ -26,7 +26,7 @@ public class Dictionnaire extends Hashtable<Integer,String> {
 
         // OUVERTURE DU DICTIONNAIRE
         try {
-            BufferedReader in = new BufferedReader(new FileReader("dictionnaire.txt"));
+            BufferedReader in = new BufferedReader(new FileReader("ressources/dictionnaire.txt"));
            
             String line;
 

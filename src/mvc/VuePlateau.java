@@ -43,6 +43,12 @@ public class VuePlateau implements Observer {
         return null;
     }
 
+    public void reset() {
+        for (Node node : this.grillePanel.lookupAll("#piece")) {
+            this.grillePanel.getChildren().remove(node);
+        }
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         // Gère le placement de la pièce en cours
@@ -89,6 +95,16 @@ public class VuePlateau implements Observer {
                         this.grillePanel.add(p, p.col, p.lig);
                         this.modl.motCourant.add(p);
                     }
+
+                    // Enlève la pièce de la main du joueur
+                    switch (this.modl.joueur) {
+                        case J1:
+                            this.modl.mainJ1.remove(p);
+                            break;
+                        case J2:
+                            this.modl.mainJ2.remove(p);
+                            break;
+                    }
                 }
             }
 
@@ -98,6 +114,15 @@ public class VuePlateau implements Observer {
 
                 if (p.score.getText().equals("0")) {
                     p.lettre.setText("");
+                }
+
+                switch (this.modl.joueur) {
+                    case J1:
+                        this.modl.mainJ1.add(p);
+                        break;
+                    case J2:
+                        this.modl.mainJ2.add(p);
+                        break;
                 }
 
                 this.mainPanel.getChildren().add(p);
