@@ -19,6 +19,8 @@ public class Modele extends Observable {
 
     public Joueur joueur;
     public int tour;
+    public int passer;
+    public String erreur;
 
     public Modele() {
         this.plateau = new Plateau();
@@ -29,6 +31,7 @@ public class Modele extends Observable {
         this.mainJ2 = new ArrayList<VuePiece>();
         this.joueur = Joueur.J1;
         this.tour = 0;
+        this.passer = 0;
     }
 
     public void deplacerPiece(VuePiece p) {
@@ -48,7 +51,7 @@ public class Modele extends Observable {
     public boolean verificationTour() {
         // Vérifier la longueur du mot en fonction du tour
         if (this.tour == 0 && this.motCourant.size() < 2 || this.tour != 0 && this.motCourant.size() < 1) {
-            System.out.println("longueur");
+            this.erreur = "Le mot est trop petit.";
             return false;
         }
 
@@ -83,14 +86,14 @@ public class Modele extends Observable {
 
         // Vérifier la lettre au centre au premier tour
         if (this.tour == 0 && !(lettreCentre)) {
-            System.out.println("pas lettre centre");
+            this.erreur = "Il n'y a pas de lettre au centre.";
             this.restaurerPlateau(save);
             return false;
         }
 
         // Vérifier si le mot est sur une seule colonne/ligne
         if (!(motCol || motLig)) {
-            System.out.println("pas sur lig/col");
+            this.erreur = "Le mot n'est pas formé sur une seule colonne/ligne.";
             this.restaurerPlateau(save);
             return false;
         }
@@ -105,7 +108,7 @@ public class Modele extends Observable {
 
             while (lig <= coordLig[this.motCourant.size() - 1]) {
                 if (this.plateau.get(lig, col) <= 0) {
-                    System.out.println("trou mot col");
+                    this.erreur = "Le mot formé a un trou.";
                     this.restaurerPlateau(save);
                     return false;
                 }
@@ -134,7 +137,7 @@ public class Modele extends Observable {
 
             while (col <= coordCol[this.motCourant.size() - 1]) {
                 if (this.plateau.get(lig, col) <= 0) {
-                    System.out.println("trou mot lig");
+                    this.erreur = "Le mot formé a un trou.";
                     this.restaurerPlateau(save);
                     return false;
                 }
@@ -157,15 +160,13 @@ public class Modele extends Observable {
         }
 
         if (this.tour != 0 && !voisin) {
-            System.out.println("voisin");
+            this.erreur = "Le mot n'est pas rattaché à une lettre du plateau.";
             this.restaurerPlateau(save);
             return false;
         }
 
-        System.out.println(this.plateau.verif(this.motCourant) == this.plateau.verifierPlateau());
-
-        if (!this.plateau.verif(this.motCourant)) {
-            System.out.println("ortho");
+        if (!this.plateau.verifierPlateau()) {
+            this.erreur = "L'orthographe du mot est incorrecte.";
             this.restaurerPlateau(save);
             return false;
         }
@@ -189,5 +190,6 @@ public class Modele extends Observable {
         this.mainJ2 = new ArrayList<VuePiece>();
         this.joueur = Joueur.J1;
         this.tour = 0;
+        this.passer = 0;
     }
 }

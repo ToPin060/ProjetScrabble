@@ -29,11 +29,6 @@
     -fx-font-family: "Segoe MDL2 Assets";
 }
 
-.ctrl-joueur {
-    -fx-background-color: #faf8f9;
-    -fx-background-insets: 0 10 10 10;
-}
-
 .ctrl-joueur *.button {
     -fx-background-color: #cccccc;
     -fx-pref-width: 90px;

@@ -69,8 +69,7 @@ public class Controleur {
     }
 
     @FXML
-    private void fin() {
-        System.out.println("---------");
+    private void finTour() {
         if (this.modl.verificationTour()) {
             switch (this.modl.joueur) {
                 case J1:
@@ -82,18 +81,37 @@ public class Controleur {
             }
 
             this.majTexte();
+            this.modl.passer = 0;
             this.modl.tourSuivant();
 
             if (this.modl.pioche.n_pieces < 7) {
                 this.echangerBtn.setDisable(true);
+            }
+
+            else if (this.modl.pioche.n_pieces == 0) {
+                if (this.modl.mainJ1.size() == 0) {
+                    for (int i = 0; i < this.modl.mainJ2.size(); i++) {
+                        int score = Integer.parseInt((String) this.modl.mainJ2.get(i).score.getText());
+                        this.modl.score.j1 += score;
+                        this.gameOver();
+                    }
+                }
+
+                else if (this.modl.mainJ2.size() == 0) {
+                    for (int i = 0; i < this.modl.mainJ1.size(); i++) {
+                        int score = Integer.parseInt((String) this.modl.mainJ1.get(i).score.getText());
+                        this.modl.score.j2 += score;
+                        this.gameOver();
+                    }
+                }
             }
         }
 
         else {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Fin de tour impossible");
-            alert.setContentText("Le mot est incorrect ou mal placé.");
+            alert.setHeaderText(null);
+            alert.setContentText(this.modl.erreur);
             alert.showAndWait();
         }
     }
@@ -109,6 +127,7 @@ public class Controleur {
         this.main.reset();
         this.joueurTexte.setText("Joueur 1");
         this.scoreTexte.setText("Score: 0");
+        this.echangerBtn.setDisable(false);
     }
 
     @FXML
@@ -128,9 +147,9 @@ public class Controleur {
         }
 
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(null, choix);
-        dialog.setTitle("Échanger");
-        dialog.setHeaderText("Les x dernières pièces seront échangées");
-        dialog.setContentText("Nombre de pièces:");
+        dialog.setTitle("Échanger les x dernières pièces");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Nombre de pièces à échanger :");
         Optional<Integer> res = dialog.showAndWait();
         if (res.isPresent()) {
             switch (this.modl.joueur) {
@@ -198,9 +217,15 @@ public class Controleur {
         if (this.modl.tour == 0) {
             this.modl.tour--;
         }
+
         this.majTexte();
+        this.modl.passer++;
         this.modl.motCourant.clear();
         this.modl.tourSuivant();
+
+        if (this.modl.passer >= 6) {
+            this.gameOver();
+        }
     }
 
     public void drag(MouseEvent event) {
@@ -210,7 +235,6 @@ public class Controleur {
         if (p.jouable) {
             p.setTranslateX(event.getX() + p.getTranslateX() - 25);
             p.setTranslateY(event.getY() + p.getTranslateY() - 25);
-            event.consume();
         }
     }
 
@@ -220,8 +244,10 @@ public class Controleur {
         p.setTranslateY(0);
 
         if (p.jouable) {
-            int col = (int) ((event.getSceneX() + 50) / 50) - 1;
-            int lig = (int) ((event.getSceneY() + 50) / 50) - 2;
+            int xOffset = (int) ((event.getSceneX() - 10) / 50);
+            int yOffset = (int) ((event.getSceneY() - 36) / 50);
+            int col = (int) ((event.getSceneX() - 10 - xOffset) / 50);
+            int lig = (int) ((event.getSceneY() - 36 - yOffset) / 50);
             p.col = col;
             p.lig = lig;
             this.modl.deplacerPiece(p);
@@ -239,5 +265,26 @@ public class Controleur {
                 this.scoreTexte.setText("Score: " + this.modl.score.j1);
                 break;
         }
+    }
+
+    public void gameOver() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Partie terminée");
+        alert.setHeaderText(null);
+
+        if (this.modl.score.j1 == this.modl.score.j2) {
+            alert.setContentText("Personne n'a gagné !");
+        }
+
+        else if (this.modl.score.j1 > this.modl.score.j2) {
+            alert.setContentText("Le joueur 1 a gagné avec " + this.modl.score.j1 + " points !");
+        }
+
+        else {
+            alert.setContentText("Le joueur 2 a gagné avec " + this.modl.score.j2 + " points !");
+        }
+
+        alert.showAndWait();
+        this.abandonner();
     }
 }

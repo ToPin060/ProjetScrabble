@@ -69,7 +69,7 @@ public class VuePlateau implements Observer {
                     if (p.score.getText().equals("0")) {
                         TextInputDialog dialog = new TextInputDialog("");
                         dialog.setTitle("Joker");
-                        dialog.setHeaderText("Choix du Joker");
+                        dialog.setHeaderText(null);
                         dialog.setContentText("Entrez une lettre :");
                         Optional<String> ltr = dialog.showAndWait();
 
@@ -78,8 +78,8 @@ public class VuePlateau implements Observer {
                                 || (int) ltr.get().toLowerCase().charAt(0) > 122) {
                             Alert alert = new Alert(AlertType.ERROR);
                             alert.setTitle("Erreur");
-                            alert.setHeaderText("Joker non valide");
-                            alert.setContentText("Le Joker doit être une lettre!");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Le Joker est invalide.");
                             alert.showAndWait();
                         }
 
@@ -127,6 +127,20 @@ public class VuePlateau implements Observer {
 
                 this.mainPanel.getChildren().add(p);
                 this.modl.motCourant.remove(p);
+            }
+
+            // Déplace la pièce à l'intérieur de la main
+            else {
+                switch (this.modl.joueur) {
+                    case J1:
+                        this.modl.mainJ1.remove(p);
+                        this.modl.mainJ1.add(p);
+                        break;
+                    case J2:
+                        this.modl.mainJ2.remove(p);
+                        this.modl.mainJ2.add(p);
+                        break;
+                }
             }
         }
     }

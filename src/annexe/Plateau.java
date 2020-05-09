@@ -1,7 +1,6 @@
 package annexe;
 
 import java.util.ArrayList;
-
 import mvc.VuePiece;
 
 public class Plateau {
@@ -88,49 +87,6 @@ public class Plateau {
     }
 
     /*
-    public boolean verif(ArrayList<VuePiece> motCourant) {
-
-        int dir; int i; boolean ok = true;
-
-        if (motCourant.length == 1) {
-            boolean haut,bas,gauche,droite;
-
-            haut = this.get(motCourant[0][0] - 1, motCourant[0][1]) > 0;
-            gauche = this.get(motCourant[0][0], motCourant[0][1] - 1) > 0;
-            bas = this.get(motCourant[0][0] + 1, motCourant[0][1]) > 0;
-            droite = this.get(motCourant[0][0], motCourant[0][1] + 1) > 0;
-
-            if ( (haut || bas) && (gauche || droite) ){
-                
-                return getMot(motCourant[0], 0, "", false)[0] & getMot(motCourant[0], 1, "", false)[0];
-            }
-            else {
-                if (haut || bas) { return  getMot(motCourant[0], 1, "", false)[0]; }
-                else { return  getMot(motCourant[0], 1, "", false)[0]; }
-            }
-        }
-        else {
-            if (motCourant[0][0]-motCourant[1][0] == 0) { dir = 0; }
-            else { dir = 1; }
-
-            ok &= getMot(motCourant[0], dir, "", true)[0];
-            
-            if (dir == 0) { dir = 1;}
-            else { dir = 0;}
-
-            for (i = 0; i < motCourant.length; i++) {
-                
-                boolean save[] = getMot(motCourant[i], dir, "", false);
-                if (!save[1]) {
-                    
-                    ok &= save[0];
-                }
-            }
-        }
-        
-        return ok;
-    }
-*/
     public boolean[] getMot(int[] coord, int dir,String mot, boolean pre) {
 
         while (pre) {
@@ -223,7 +179,7 @@ public class Plateau {
         }
         
         return ok;
-    }
+    }*/
 
     public boolean verifierPlateau() {
         ArrayList<String> horz = new ArrayList<String>();

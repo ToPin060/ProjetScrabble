@@ -258,12 +258,12 @@
       <Pane styleClass="ctrl-joueur" prefHeight="100.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="echangerBtn" layoutX="30.0" layoutY="13.0" onAction="#echanger" text="Échanger" />
-            <Button layoutX="666.0" layoutY="50.0" onAction="#fin" text="Fin du tour" />
-            <HBox id="main" fx:id="mainPanel" layoutX="140.0" layoutY="20.0" prefHeight="50.0" />
+            <Button layoutX="666.0" layoutY="50.0" onAction="#finTour" text="Fin du tour" />
             <Button layoutX="666.0" layoutY="13.0" onAction="#passer" text="Passer" />
             <Button layoutX="30.0" layoutY="50.0" onAction="#abandonner" text="Abandonner" />
             <Text id="txt" fx:id="joueurTexte" layoutX="580.0" layoutY="30.0" />
             <Text id="txt" fx:id="scoreTexte" layoutX="580.0" layoutY="70.0" />
+            <HBox id="main" fx:id="mainPanel" layoutX="140.0" layoutY="20.0" prefHeight="50.0" />
          </children>
       </Pane>
    </bottom>

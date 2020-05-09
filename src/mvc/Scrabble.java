@@ -30,7 +30,7 @@ public class Scrabble extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         Font ui = Font.loadFont(new FileInputStream(new File("ressources/segmdl2.ttf")), 12);
-        Font f = Font.loadFont(new FileInputStream(new File("ressources/FallingSky.otf")),12);
+        Font f = Font.loadFont(new FileInputStream(new File("ressources/FallingSky.otf")), 12);
 
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("menu.fxml"));
         menuLoader.setController(this);

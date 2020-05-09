@@ -49,7 +49,7 @@ public class Score {
             for (i = 0; i < cases.length; i++) {
                 v = scoreMot(cases[i], dir, cases, 0, 0, true, 0);
                 ajoutot += v;
-                System.out.println("!dir " + v);
+                //System.out.println("!dir " + v);
             }
         }
         if(j == 1) { this.j1 += ajoutot; }
