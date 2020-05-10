@@ -13,11 +13,13 @@ public class Modele extends Observable {
     public ArrayList<VuePiece> motCourant, mainJ1, mainJ2;
     int[][] lettresP;
 
+
     public enum Joueur {
         J1, J2
     };
 
     public Joueur joueur;
+    public boolean multijoueur;
     public int tour;
     public int passer;
     public String erreur;
@@ -43,7 +45,25 @@ public class Modele extends Observable {
     public void tourSuivant() {
         // Observer: VueMain
         this.setChanged();
-        this.notifyObservers(this.joueur);
+
+        if (multijoueur) {
+            this.notifyObservers(this.joueur);
+
+            switch (this.joueur) {
+                case J1:
+                    this.joueur = Joueur.J2;
+                    break;
+
+                case J2:
+                    this.joueur = Joueur.J1;
+                    break;
+            }
+        }
+
+        else {
+            this.notifyObservers(null);
+        }
+        
         this.tour++;
         this.motCourant.clear();
     }
@@ -179,6 +199,10 @@ public class Modele extends Observable {
         for (int i = 0; i < save.length; i++) {
             this.plateau.placer(save[i][0], save[i][1], save[i][2]);
         }
+    }
+
+    public void mode(boolean multijoueur) {
+        this.multijoueur = multijoueur;
     }
 
     public void reset() {

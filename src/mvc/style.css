@@ -14,7 +14,7 @@
 }
 
 .menu *.button:hover {
-    -fx-text-fill: grey;
+    -fx-text-fill: #969696;
 }
 
 .barre-titre {
@@ -49,6 +49,19 @@
     -fx-scale-x: 0.97;
 }
 
+.table-view {
+    -fx-selection-bar: #d3d3d3;
+}
+
+.table-view:focused {
+    -fx-background-color: transparent ,-fx-box-border,-fx-control-inner-background;
+    -fx-background-insets: -1, 0, 1;
+}
+
+.table-row-cell:filled:selected {
+    -fx-cell-focus-inner-border: #d3d3d3;
+}
+
 #piece {
     -fx-min-width: 50px;
     -fx-min-height: 50px;
@@ -79,6 +92,19 @@
     -fx-font-size: 18px;
     -fx-stroke: black;
     -fx-stroke-width: 0.1px;
+}
+
+#retour {
+    -fx-background-insets: 10 0 1 10;
+    -fx-padding: 10 0 0 10;
+}
+
+#retour:hover {
+    -fx-background-color: #c7c7c7;
+}
+
+#retour:pressed {
+    -fx-background-color: #a3a3a3;
 }
 
 #minimiser {

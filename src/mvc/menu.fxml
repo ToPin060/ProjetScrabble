@@ -6,9 +6,9 @@
 
 <VBox styleClass="menu" alignment="CENTER" prefHeight="400.0" prefWidth="300.0" stylesheets="/mvc/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button onAction="#nouvellePartie" text="Solo" />
-      <Button text="Multijoueur" />
-      <Button text="Statistiques" />
+      <Button onAction="#solo" text="Solo" />
+      <Button onAction="#multi" text="Multijoueur" />
+      <Button onAction="#stats" text="Statistiques" />
       <Button onAction="#quitter" text="Quitter" />
    </children>
 </VBox>

@@ -14,11 +14,11 @@ import javafx.scene.layout.HBox;
 public class VuePlateau implements Observer {
 
     private Modele modl;
-    private Controleur ctrl;
+    private ControleurScrabble ctrl;
     private GridPane grillePanel;
     private HBox mainPanel;
 
-    public VuePlateau(Modele modl, Controleur ctrl) {
+    public VuePlateau(Modele modl, ControleurScrabble ctrl) {
         this.modl = modl;
         this.ctrl = ctrl;
         this.grillePanel = ctrl.grillePanel;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<Pane prefHeight="420.0" prefWidth="300.0" stylesheets="/mvc/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox styleClass="barre-titre" onMouseDragged="#dragFenetre" onMousePressed="#getCoord" alignment="BOTTOM_RIGHT" prefWidth="300.0" layoutY="0.0">
+         <children>
+            <AnchorPane>
+               <children>
+                  <Button id="retour" prefHeight="36.0" prefWidth="55.0" onAction="#retour" text="&#59179;" />
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <Rectangle width="145.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <Button id="minimiser" prefHeight="36.0" prefWidth="45.0" onAction="#minimiser" text="&#59192;" />
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <Button id="fermer" prefHeight="36.0" prefWidth="55.0" onAction="#fermer" text="&#59540;" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <TableView fx:id="tableauScore" prefHeight="374.0" prefWidth="280.0" layoutX="10.0" layoutY="36.0">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn fx:id="j1" prefWidth="100.0" text="J1" />
+            <TableColumn fx:id="j2" prefWidth="100.0" text="J2" />
+            <TableColumn fx:id="tours" prefWidth="100.0" text="Tours" />
+         </columns>
+      </TableView>
+   </children>
+</Pane>

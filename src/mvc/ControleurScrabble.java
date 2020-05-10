@@ -1,7 +1,14 @@
 package mvc;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Optional;
+import annexe.Stats;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -14,25 +21,24 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Controleur {
+public class ControleurScrabble {
 
+    private Stage stage;
     private Scene menu;
     private Modele modl;
     private VueMain main;
     private VuePlateau plat;
     private double x, y;
 
-    public Controleur(Scene menu, Modele modl) {
-        this.menu = menu;
+    public ControleurScrabble(Modele modl) {
         this.modl = modl;
     }
 
-    @FXML
-    public GridPane grillePanel;
-    public HBox mainPanel;
-    public Text joueurTexte;
-    public Text scoreTexte;
-    public Button echangerBtn;
+    @FXML public GridPane grillePanel;
+    @FXML public HBox mainPanel;
+    @FXML public Text joueurTexte;
+    @FXML public Text scoreTexte;
+    @FXML public Button echangerBtn;
 
     @FXML
     private void initialize() {
@@ -46,8 +52,7 @@ public class Controleur {
 
     @FXML
     private void minimiser() {
-        Stage stage = (Stage) this.grillePanel.getScene().getWindow();
-        stage.setIconified(true);
+        this.stage.setIconified(true);
     }
 
     @FXML
@@ -63,9 +68,8 @@ public class Controleur {
 
     @FXML
     private void dragFenetre(MouseEvent event) {
-        Stage stage = (Stage) this.grillePanel.getScene().getWindow();
-        stage.setX(event.getScreenX() - x);
-        stage.setY(event.getScreenY() - y);
+        this.stage.setX(event.getScreenX() - x);
+        this.stage.setY(event.getScreenY() - y);
     }
 
     @FXML
@@ -118,13 +122,11 @@ public class Controleur {
 
     @FXML
     private void abandonner() {
-        Stage stage = (Stage) this.grillePanel.getScene().getWindow();
-        stage.setScene(this.menu);
-        stage.centerOnScreen();
+        this.stage.setScene(this.menu);
+        this.stage.centerOnScreen();
 
         this.modl.reset();
         this.plat.reset();
-        this.main.reset();
         this.joueurTexte.setText("Joueur 1");
         this.scoreTexte.setText("Score: 0");
         this.echangerBtn.setDisable(false);
@@ -228,6 +230,18 @@ public class Controleur {
         }
     }
 
+    public void initVueMain() {
+        this.main.init();
+    }
+
+    public void getStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void getMenu(Scene menu) {
+        this.menu = menu;
+    }
+
     public void drag(MouseEvent event) {
         VuePiece p = (VuePiece) event.getSource();
         p.toFront();
@@ -255,19 +269,55 @@ public class Controleur {
     }
 
     public void majTexte() {
-        switch (this.modl.joueur) {
-            case J1:
-                this.joueurTexte.setText("Joueur 2");
-                this.scoreTexte.setText("Score: " + this.modl.score.j2);
-                break;
-            case J2:
-                this.joueurTexte.setText("Joueur 1");
-                this.scoreTexte.setText("Score: " + this.modl.score.j1);
-                break;
+        if (!this.modl.multijoueur) {this.scoreTexte.setText("Score: " + this.modl.score.j1);}
+
+        else {
+            switch (this.modl.joueur) {
+                case J1:
+                    this.joueurTexte.setText("Joueur 2");
+                    this.scoreTexte.setText("Score: " + this.modl.score.j2);
+                    break;
+                case J2:
+                    this.joueurTexte.setText("Joueur 1");
+                    this.scoreTexte.setText("Score: " + this.modl.score.j1);
+                    break;
+            }
         }
     }
 
     public void gameOver() {
+        ArrayList<Stats> scoreListe = new ArrayList<Stats>();
+        Stats stats = new Stats(this.modl.score.j1, this.modl.score.j2, this.modl.tour);
+        if (!this.modl.multijoueur) {
+            stats.j2 = null;
+        }
+
+        File fichier = new File("ressources/stats.dat");
+        
+        // Récupérer la liste des scores
+        try {
+            FileInputStream fis = new FileInputStream(fichier);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            scoreListe = (ArrayList<Stats>) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Fichier vide, manquant ou corrompu");
+        }
+
+        // Compléter la liste des scores
+        scoreListe.add(stats);
+       
+        try {
+            FileOutputStream fos = new FileOutputStream(fichier);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(scoreListe);
+            oos.close();
+            fos.close();
+        } catch (IOException e) {
+            System.out.println("Fichier vide, manquant ou corrompu");
+        }
+
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Partie terminée");
         alert.setHeaderText(null);

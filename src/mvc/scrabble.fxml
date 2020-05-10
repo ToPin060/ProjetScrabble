@@ -15,7 +15,7 @@
                   <Button id="minimiser" prefHeight="36.0" prefWidth="45.0" onAction="#minimiser" text="&#59192;" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="880.0">
+            <AnchorPane>
                <children>
                   <Button id="fermer" prefHeight="36.0" prefWidth="55.0" onAction="#fermer" text="&#59540;" />
                </children>

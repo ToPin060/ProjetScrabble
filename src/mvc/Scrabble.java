@@ -3,7 +3,6 @@ package mvc;
 import java.io.File;
 import java.io.FileInputStream;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +16,7 @@ public class Scrabble extends Application {
     private Stage stage;
     private Scene menu;
     private Scene scrabble;
+    private Scene statistiques;
     private Modele modl = new Modele();
 
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class Scrabble extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.stage = primaryStage;
+        stage = primaryStage;
         primaryStage.centerOnScreen();
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
@@ -33,30 +33,38 @@ public class Scrabble extends Application {
         Font f = Font.loadFont(new FileInputStream(new File("ressources/FallingSky.otf")), 12);
 
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("menu.fxml"));
-        menuLoader.setController(this);
+        ControleurMenu ctrlMenu = new ControleurMenu();
+        menuLoader.setController(ctrlMenu);
         Parent menuRoot = (Parent) menuLoader.load();
         menu = new Scene(menuRoot);
         menu.setFill(Color.TRANSPARENT);
+        ctrlMenu.getStage(stage);
 
         FXMLLoader scrabbleLoader = new FXMLLoader(getClass().getResource("scrabble.fxml"));
-        scrabbleLoader.setController(new Controleur(menu, modl));
+        ControleurScrabble ctrlScrabble = new ControleurScrabble(modl);
+        scrabbleLoader.setController(ctrlScrabble);
         Parent scrabbleRoot = (Parent) scrabbleLoader.load();
         scrabble = new Scene(scrabbleRoot);
         scrabble.setFill(Color.TRANSPARENT);
+        ctrlScrabble.getStage(stage);
+        ctrlScrabble.getMenu(menu);
+
+        FXMLLoader statistiquesLoader = new FXMLLoader(getClass().getResource("statistiques.fxml"));
+        ControleurStats ctrlStats = new ControleurStats();
+        statistiquesLoader.setController(ctrlStats);
+        Parent statistiquesRoot = (Parent) statistiquesLoader.load();
+        statistiques = new Scene(statistiquesRoot);
+        statistiques.setFill(Color.TRANSPARENT);
+        ctrlStats.getStage(stage);
+        ctrlStats.getMenu(menu);
+
+        ctrlMenu.getScenes(scrabble, statistiques);
+        ctrlMenu.getModl(this.modl);
+        ctrlMenu.getCtrlSc(ctrlScrabble);
+        ctrlMenu.getCtrlSt(ctrlStats);
 
         primaryStage.setScene(menu);
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
-
-    @FXML
-    private void nouvellePartie() {
-        stage.setScene(scrabble);
-        stage.centerOnScreen();
-    }
-
-    @FXML
-    private void quitter() {
-        System.exit(0);
     }
 }
